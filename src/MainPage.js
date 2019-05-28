@@ -1,65 +1,132 @@
-import React, { Component } from 'react';
-import './mainPage.css'
-import Button from './Components/Button'
-import InputButton from './Components/InputButton'
-
+import React, { Component } from "react";
+import "./mainPage.css";
+import Button from "./Components/Button";
+import InputButton from "./Components/InputButton";
 
 class MainPage extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      decimalInput: ''
-     }
+    this.state = {
+      inputType: "DECIMAL",
+      input: "",
+      outputType: "decToBin"
+    };
+    this.outputList = ["Binary", "Hex"];
   }
 
-  handleChange = event => {
+  handleInputChange = event => {
     this.setState({
-      decimalInput: event.target.value
-    })
+      input: event.target.value
+    });
+  };
+
+  handleInputTypeChange = event => {
+    this.setState({
+      inputType: event.target.value,
+      input: ""
+    });
   }
 
-  convertToBinary = decVal => {
-    if(decVal.length > 0){
-    let binaryVal = "";
-    let currentDecVal = parseInt(decVal);
-      while(true){
-        binaryVal = (currentDecVal % 2).toString() + binaryVal;
-        currentDecVal = Math.floor(currentDecVal / 2)
-        if(currentDecVal === 0){
-          break;
-      }
+  handleOutputTypeChange = event => {
+    this.setState({
+      outputType: event.target.value
+    });
+  }
+
+
+  renderOutputSection = outputType => {
+    switch(outputType) {
+      case "decToBin":
+        return this.convertToBinary(this.state.input);
+      case "decToHex":
+        // code block
+        break;
+      case "binToDec":
+
+      break;
+      case "binToHex":
+
+      break;
+
+      case "hexToDec":
+
+      break;
+
+      case "hexToBin":
+
+      break;
+
+      default:
+        // code block
     }
-    return binaryVal;
-  }
-  return "0";
-  }
-
-  convertToDecimal = binVal => {
+    
 
   }
+  convertToBinary = decVal => {
+    if (decVal.length > 0 && isNaN(parseInt(decVal)) === false) {
+      let binaryVal = "";
+      let currentDecVal = parseInt(decVal);
+      while (true) {
+        binaryVal = (currentDecVal % 2).toString() + binaryVal;
+        currentDecVal = Math.floor(currentDecVal / 2);
+        if (currentDecVal === 0) {
+          break;
+        }
+      }
+      return binaryVal;
+    }
+    return "0";
+  };
 
+  convertToDecimal = binVal => {};
 
-  render() { 
-    console.log(this.state.decimalInput);
-    console.log(Math.floor(49 / 2));
-    console.log(this.convertToBinary("20"));
-    return ( 
+  render() {
+    console.log(isNaN(parseInt(this.state.input)));
+    console.log(this.state.inputType);
+    console.log(this.state.outputType);
+    return (
       <div className="main">
-        <div className="header">DECIMAL TO BINARY/BINARY TO DECIMAL CONVERTER</div>
-        <div className="conversionType">
-          <div>Conversion Type:</div>
-          <div className="changeButton"><Button /></div>
+        <div className="header">VALUE CONVERTER</div>
+        <div className="buttons">
+          <div className="inputButton">
+            <div>Input:</div>
+            <div>
+              <Button 
+              value={this.state.inputType} 
+              onChange={this.handleInputTypeChange}
+              item1="Decimal" 
+              item2="Binary" 
+              item3="Hex"/>
+            </div>
           </div>
-        <div className="inputs">
-          <div>DECIMAL</div>
-          <InputButton value={this.state.decimalInput} onChange={this.handleChange}/>
-          <div>In Binary is...</div>
-          <div>{this.convertToBinary(this.state.decimalInput)}</div>
+          <div className="outputButton">
+            <div>Output:</div>
+            <div>
+              <Button 
+              value={this.state.inputType} 
+              onChange={this.handleOutputTypeChange}
+
+              item1={this.outputList[0]} 
+              item2={this.outputList[1]}
+              
+              />
+            </div>
+          </div>
         </div>
-        
+        <div className="inputOutputSec">
+          <div>{this.state.inputType}</div>
+          <InputButton
+            value={this.state.input}
+            onChange={this.handleInputChange}
+          />
+          <div>In {this.outputType} is...</div>
+          <div className="outputVal">
+            {this.renderOutputSection(this.state.outputType)}
+          </div>
+        </div>
       </div>
-     );
+    );
   }
 }
- 
+
 export default MainPage;

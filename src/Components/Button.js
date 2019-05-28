@@ -1,11 +1,15 @@
 import React from 'react';
 import './button.css'
 
-const Button = () => {
+const Button = props => {
 
     return(
         <div>
-            <button type="button">TEMP BUTTON</button>
+            <select className="selectButton" defaultValue="Choose here">
+            <option value="item1">{props.item1}</option>
+            <option value="item2">{props.item2}</option>
+            <option value="item3">{props.item3}</option>
+            </select>
         </div>
     )
 
