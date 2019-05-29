@@ -7,7 +7,7 @@ const inputButton = props => {
         <input 
         className="inputField" 
         type="text" 
-        placeholder="Decimal value" 
+        placeholder={props.placeholderVal + " value..."}
         size="40"
         value={props.value}
         onChange = {props.onChange}

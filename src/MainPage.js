@@ -12,7 +12,7 @@ class MainPage extends Component {
       input: "",
       outputType: "Binary"
     };
-    this.conversionType="decToBin"
+    this.conversionType="decToBin";
     this.converter = new ConversionOps();
   }
 
@@ -76,18 +76,16 @@ class MainPage extends Component {
       break;
 
       case "hexToBin":
+        return this.converter.hexToBin(this.state.input);
 
-      break;
-
-      default:
-        // code block
+      default: 
+        return this.state.input;
     }
     
 
   }
   
   render() {
-    console.log(this.state.input);
     console.log("input type: " + this.state.inputType);
     console.log("output type: " + this.state.outputType);
     console.log(this.conversionType);
@@ -125,6 +123,7 @@ class MainPage extends Component {
           <InputButton
             value={this.state.input}
             onChange={this.handleInputChange}
+            placeholderVal={this.state.inputType}
           />
           <div>In {this.state.outputType} is...</div>
           <div className="outputVal">
