@@ -7,11 +7,11 @@ class MainPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputType: "DECIMAL",
+      inputType: "Decimal",
       input: "",
-      outputType: "decToBin"
+      outputType: "Binary"
     };
-    this.outputList = ["Binary", "Hex"];
+    this.conversionType="decToBin"
   }
 
   handleInputChange = event => {
@@ -25,17 +25,43 @@ class MainPage extends Component {
       inputType: event.target.value,
       input: ""
     });
+    this.changeConversionType();
   }
 
   handleOutputTypeChange = event => {
     this.setState({
       outputType: event.target.value
     });
+    console.log("event.target.value: " + event.target.value);
+
+    this.changeConversionType();
+  }
+
+  changeConversionType = () => {
+    let newInput = "";
+    let newOutput = "";
+    if(this.state.inputType==="Decimal"){
+      newInput = "dec";
+    } else if(this.state.inputType==="Binary"){
+      newInput="bin";
+    } else {
+      newInput="hex"
+    }
+
+    if(this.state.outputType==="Decimal"){
+      newOutput = "Dec";
+    } else if(this.state.outputType==="Binary"){
+      newOutput="Bin";
+    } else {
+      newOutput="Hex"
+    }
+
+    this.conversionType = newInput + "To" + newOutput;
   }
 
 
   renderOutputSection = outputType => {
-    switch(outputType) {
+    switch(this.conversionType) {
       case "decToBin":
         return this.convertToBinary(this.state.input);
       case "decToHex":
@@ -62,6 +88,7 @@ class MainPage extends Component {
     
 
   }
+
   convertToBinary = decVal => {
     if (decVal.length > 0 && isNaN(parseInt(decVal)) === false) {
       let binaryVal = "";
@@ -81,9 +108,10 @@ class MainPage extends Component {
   convertToDecimal = binVal => {};
 
   render() {
-    console.log(isNaN(parseInt(this.state.input)));
-    console.log(this.state.inputType);
-    console.log(this.state.outputType);
+    console.log(this.state.input);
+    console.log("input type: " + this.state.inputType);
+    console.log("output type: " + this.state.outputType);
+    console.log("conversion type: " + this.conversionType);
     return (
       <div className="main">
         <div className="header">VALUE CONVERTER</div>
@@ -103,11 +131,11 @@ class MainPage extends Component {
             <div>Output:</div>
             <div>
               <Button 
-              value={this.state.inputType} 
+              value={this.state.outputType} 
               onChange={this.handleOutputTypeChange}
-
-              item1={this.outputList[0]} 
-              item2={this.outputList[1]}
+              item1="Binary"
+              item2="Decimal"
+              item3="Hex"
               
               />
             </div>
@@ -119,7 +147,7 @@ class MainPage extends Component {
             value={this.state.input}
             onChange={this.handleInputChange}
           />
-          <div>In {this.outputType} is...</div>
+          <div>In {this.state.outputType} is...</div>
           <div className="outputVal">
             {this.renderOutputSection(this.state.outputType)}
           </div>
