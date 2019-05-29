@@ -24,18 +24,15 @@ class MainPage extends Component {
     this.setState({
       inputType: event.target.value,
       input: ""
-    });
-    this.changeConversionType();
+    }, () => {this.changeConversionType()});
   }
 
   handleOutputTypeChange = event => {
     this.setState({
       outputType: event.target.value
-    });
-    console.log("event.target.value: " + event.target.value);
-
-    this.changeConversionType();
+    }, () => {this.changeConversionType()});
   }
+
 
   changeConversionType = () => {
     let newInput = "";
@@ -61,7 +58,7 @@ class MainPage extends Component {
 
 
   renderOutputSection = outputType => {
-    switch(this.conversionType) {
+    switch(outputType) {
       case "decToBin":
         return this.convertToBinary(this.state.input);
       case "decToHex":
@@ -111,7 +108,7 @@ class MainPage extends Component {
     console.log(this.state.input);
     console.log("input type: " + this.state.inputType);
     console.log("output type: " + this.state.outputType);
-    console.log("conversion type: " + this.conversionType);
+    console.log(this.conversionType);
     return (
       <div className="main">
         <div className="header">VALUE CONVERTER</div>
@@ -149,7 +146,7 @@ class MainPage extends Component {
           />
           <div>In {this.state.outputType} is...</div>
           <div className="outputVal">
-            {this.renderOutputSection(this.state.outputType)}
+            {this.renderOutputSection(this.conversionType)}
           </div>
         </div>
       </div>
