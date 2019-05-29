@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./mainPage.css";
 import Button from "./Components/Button";
 import InputButton from "./Components/InputButton";
+import ConversionOps from "./ConversionOps.js"
 
 class MainPage extends Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class MainPage extends Component {
       outputType: "Binary"
     };
     this.conversionType="decToBin"
+    this.converter = new ConversionOps();
   }
 
   handleInputChange = event => {
@@ -32,7 +34,6 @@ class MainPage extends Component {
       outputType: event.target.value
     }, () => {this.changeConversionType()});
   }
-
 
   changeConversionType = () => {
     let newInput = "";
@@ -57,16 +58,15 @@ class MainPage extends Component {
   }
 
 
-  renderOutputSection = outputType => {
+  renderOutput = outputType => {
     switch(outputType) {
       case "decToBin":
-        return this.convertToBinary(this.state.input);
+        return this.converter.decToBin(this.state.input);
       case "decToHex":
         // code block
         break;
       case "binToDec":
-
-      break;
+        return this.converter.binToDec(this.state.input);
       case "binToHex":
 
       break;
@@ -85,25 +85,7 @@ class MainPage extends Component {
     
 
   }
-
-  convertToBinary = decVal => {
-    if (decVal.length > 0 && isNaN(parseInt(decVal)) === false) {
-      let binaryVal = "";
-      let currentDecVal = parseInt(decVal);
-      while (true) {
-        binaryVal = (currentDecVal % 2).toString() + binaryVal;
-        currentDecVal = Math.floor(currentDecVal / 2);
-        if (currentDecVal === 0) {
-          break;
-        }
-      }
-      return binaryVal;
-    }
-    return "0";
-  };
-
-  convertToDecimal = binVal => {};
-
+  
   render() {
     console.log(this.state.input);
     console.log("input type: " + this.state.inputType);
@@ -146,7 +128,7 @@ class MainPage extends Component {
           />
           <div>In {this.state.outputType} is...</div>
           <div className="outputVal">
-            {this.renderOutputSection(this.conversionType)}
+            {this.renderOutput(this.conversionType)}
           </div>
         </div>
       </div>
