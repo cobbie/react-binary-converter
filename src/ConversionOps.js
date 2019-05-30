@@ -1,3 +1,4 @@
+import _ from 'underscore'
 class ConversionOps{
     hexDict = {
         "a": 10,
@@ -7,6 +8,7 @@ class ConversionOps{
         "e": 14,
         "f": 15
     };
+
     decToBin(decVal, fBit = false){
         if (decVal.length > 0 && isNaN(parseInt(decVal)) === false) {
             let binaryVal = "";
@@ -19,7 +21,7 @@ class ConversionOps{
               }
             }
             if(fBit && binaryVal.length < 4){
-                while(binaryVal.length != 4){
+                while(binaryVal.length !== 4){
                     binaryVal = "0" + binaryVal;
                 }
             }
@@ -32,25 +34,42 @@ class ConversionOps{
     }
 
     binToDec(binVal){
-        let decVal = "";
+        let decVal = 0;
         let currentBin = 1;
         for(let i = 0; i <= binVal.length-1; i++){
             if(binVal[(binVal.length-1) - i] === "1"){
-                decVal += String(currentBin);
+                 decVal += currentBin;
             }
             currentBin *= 2;
+            console.log("input binVal: " + binVal)
+        console.log("decVal: " + decVal);
+        console.log("Current Bin: " + currentBin);
         }
         return decVal;
 
     }
 
     binToHex(binVal){
-
+        let hexVal = "";
+        while(binVal.length % 4 !== 0){
+                binVal = "0" + binVal;
+        }
+        for(let i = 0; i < binVal.length-1; i += 3){
+            // const tempDec = this.binToDec(binVal.slice(i, i+4));
+            console.log("binVal: " + binVal.slice(i, i+4));
+            console.log("tempDec: " + this.binToDec(binVal.slice(i, i+4)));
+            // if(tempDec >= 10){
+            //     hexVal += (_.invert(this.hexDict))[tempDec].toUpperCase();
+            // } else{
+            //     hexVal += tempDec;
+            // }
+        }
+        // return hexVal;
     }
 
 
     hexToDec(hexVal){
-        
+        return this.binToDec(this.hexToBin(hexVal));
     }
 
     hexToBin(hexVal){
@@ -61,7 +80,6 @@ class ConversionOps{
             } else{
                 binVal += this.decToBin(String(this.hexDict[hexVal[i].toLowerCase()]), true);
             }
-            // console.log(this.decToBin(this.hexDict[hexVal[i].toLowerCase()]));
         }
         return binVal;
     }

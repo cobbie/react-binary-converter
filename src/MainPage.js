@@ -68,12 +68,10 @@ class MainPage extends Component {
       case "binToDec":
         return this.converter.binToDec(this.state.input);
       case "binToHex":
-
-      break;
+        return this.converter.binToHex(this.state.input);
 
       case "hexToDec":
-
-      break;
+        return this.converter.hexToDec(this.state.input);
 
       case "hexToBin":
         return this.converter.hexToBin(this.state.input);
@@ -86,9 +84,6 @@ class MainPage extends Component {
   }
   
   render() {
-    console.log("input type: " + this.state.inputType);
-    console.log("output type: " + this.state.outputType);
-    console.log(this.conversionType);
     return (
       <div className="main">
         <div className="header">VALUE CONVERTER</div>
