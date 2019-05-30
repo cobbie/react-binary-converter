@@ -41,9 +41,6 @@ class ConversionOps{
                  decVal += currentBin;
             }
             currentBin *= 2;
-            console.log("input binVal: " + binVal)
-        console.log("decVal: " + decVal);
-        console.log("Current Bin: " + currentBin);
         }
         return decVal;
 
@@ -54,17 +51,17 @@ class ConversionOps{
         while(binVal.length % 4 !== 0){
                 binVal = "0" + binVal;
         }
-        for(let i = 0; i < binVal.length-1; i += 3){
-            // const tempDec = this.binToDec(binVal.slice(i, i+4));
+        for(let i = 0; i < binVal.length-1; i += 4){
+            const tempDec = this.binToDec(binVal.slice(i, i+4));
             console.log("binVal: " + binVal.slice(i, i+4));
             console.log("tempDec: " + this.binToDec(binVal.slice(i, i+4)));
-            // if(tempDec >= 10){
-            //     hexVal += (_.invert(this.hexDict))[tempDec].toUpperCase();
-            // } else{
-            //     hexVal += tempDec;
-            // }
+            if(tempDec >= 10){
+                hexVal += (_.invert(this.hexDict))[tempDec].toUpperCase();
+            } else{
+                hexVal += tempDec;
+            }
         }
-        // return hexVal;
+        return hexVal;
     }
 
 
