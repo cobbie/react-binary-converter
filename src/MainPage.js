@@ -63,13 +63,11 @@ class MainPage extends Component {
       case "decToBin":
         return this.converter.decToBin(this.state.input);
       case "decToHex":
-        // code block
-        break;
+        return this.converter.decToHex(this.state.input);
       case "binToDec":
         return this.converter.binToDec(this.state.input);
       case "binToHex":
         return this.converter.binToHex(this.state.input);
-
       case "hexToDec":
         return this.converter.hexToDec(this.state.input);
 
@@ -79,8 +77,6 @@ class MainPage extends Component {
       default: 
         return this.state.input;
     }
-    
-
   }
   
   render() {
